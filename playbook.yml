@@ -1,0 +1,46 @@
+---
+- name: Configurar servidores Docker con Ansible
+  hosts: docker
+  gather_facts: yes
+
+  tasks:
+    - name: Mostrar el nombre del host
+      debug:
+        msg: "El nombre del host es: {{ ansible_hostname }}"
+
+    - name: Mostrar el sistema operativo
+      debug:
+        msg: "El sistema operativo es: {{ ansible_distribution }} {{ ansible_distribution_version }}"
+
+    - name: Crear el directorio /tmp/ansible-demo
+      file:
+        path: /tmp/ansible-demo
+        state: directory
+        mode: '0755'
+
+    - name: Crear el archivo info.txt
+      file:
+        path: /tmp/ansible-demo/info.txt
+        state: touch
+
+    - name: Escribir el nombre del servidor y el SO en info.txt
+      copy:
+        dest: /tmp/ansible-demo/info.txt
+        content: |
+          Servidor: {{ ansible_hostname }}
+          Sistema operativo: {{ ansible_distribution }} {{ ansible_distribution_version }}
+
+    - name: Crear directorios mediante un loop
+      file:
+        path: "/tmp/ansible-demo/{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - logs
+        - backup
+        - config
+
+    - name: Mostrar mensaje solo cuando el SO sea Ubuntu
+      debug:
+        msg: "El sistema operativo es Ubuntu."
+      when: ansible_distribution == "Ubuntu"
