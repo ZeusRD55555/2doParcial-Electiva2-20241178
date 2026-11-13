@@ -65,6 +65,8 @@ A continuación se muestra la captura de pantalla de la ejecución exitosa del p
 
 ![Ejecución exitosa del playbook](docs/playbook-execucion.png)
 
+FALTAN MAS CAPTURAS, ESTAN DENTRO DE LA CARPETA DOCS
+
 ## Requisitos previos
 
 - Docker (Engine o Desktop) con `docker compose`
